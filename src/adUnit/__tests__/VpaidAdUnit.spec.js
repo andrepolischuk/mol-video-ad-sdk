@@ -934,14 +934,14 @@ describe('VpaidAdUnit', () => {
           await adUnit.start();
         });
 
-        test('if paused, must resume the adUnit', () => {
+        test('if paused, must not pause the adUnit', () => {
           adUnit.creativeAd.emit(adVideoStart);
           adUnit.creativeAd.emit(adPaused);
           expect(adUnit.paused()).toBe(true);
           adUnit.creativeAd.emit(adClickThru, 'https://test.example.com/clickUrl', undefined, true);
-          expect(window.open).not.toHaveBeenCalled();
+          expect(window.open).toHaveBeenCalled();
           expect(adUnit.creativeAd.pauseAd).toHaveBeenCalledTimes(0);
-          expect(adUnit.creativeAd.resumeAd).toHaveBeenCalledTimes(1);
+          expect(adUnit.creativeAd.resumeAd).toHaveBeenCalledTimes(0);
         });
 
         describe('if playing', () => {
